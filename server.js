@@ -11,6 +11,7 @@ const cors = require('cors');
 const session = require('express-session');
 require('dotenv').config();
 const MongoDBStore = require('connect-mongodb-session')(session);
+const {sendReminders}=require('./Repository/noteRepo')
 const app = express();
 connectWithDB();
 
@@ -24,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger('dev'));
 // app.use(cors());
 app.use(cors({
-         origin:process.env.CLIENT_URL,
+         origin:'*',
         credentials: true,
       }));
 
@@ -59,6 +60,8 @@ passport.deserializeUser(function (_id, done) {
 });
 passport.use(PassportAuth());
 app.use('/api/v1',userRouter);
+
+sendReminders();
 
 let port = process.env.PORT;
 app.listen(port,()=>{

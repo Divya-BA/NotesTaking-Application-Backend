@@ -2,43 +2,47 @@ const mongoose = require('mongoose');
 const noteSchema = mongoose.Schema({
     _id: {
         type: String,
-        require: true
+        required: true
     },
     Notes: [
         {
             type: new mongoose.Schema({
-
-               _id:{
+               _id: {
                 type: String,
-                require:true
+                required: true
                },
-               isFav:{
+               isFav: {
                 type: Boolean,
-                require:true
+                required: true
                },
-               isArchive:{
+               isArchive: {
                 type: Boolean,
-                require:true
+                required: true
                },
-               isTrash:{
+               isTrash: {
                 type: Boolean,
-                require: true,
+                required: true,
                },
-               title:{
-                type:String,
-                require:true
-               },
-               description:{
+               title: {
                 type: String,
-                require:true
+                required: true
+               },
+               description: {
+                type: String,
+                required: true
+               },
+               deadline: {
+                type: Date,
+                required: true,
+               },
+               status: {
+                type: String,
+                enum: ['Pending', 'Completed', 'InProgress'],
+                default: 'Pending',
                }
-            }
-            , { timestamps: true }
-            )
+            }, { timestamps: true })
         }
     ]
-
 }, { timestamps: true });
 
 module.exports = mongoose.model('NoteModel', noteSchema, 'Notes');
-
